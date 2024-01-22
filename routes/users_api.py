@@ -49,6 +49,7 @@ async def retrieve_event(id: PydanticObjectId, pswd) -> User:
 
 # id에 따른 row 삭제
 # http://127.0.0.1:8000/users_api/{id}
+# http://127.0.0.1:8000/users_api/65ae11d482bbdcb75e210406
 @router.delete("/{id}")
 async def delete_event(id: PydanticObjectId) -> dict:
     user = await users_database.get(id)
@@ -66,6 +67,7 @@ async def delete_event(id: PydanticObjectId) -> dict:
 
 # put == update
 # http://127.0.0.1:8000/users_api/{id}
+# http://127.0.0.1:8000/users_api/65ae1cb95286613e238fece0
 from fastapi import Request
 @router.put("/{id}", response_model=User)
 async def update_event_withjson(id: PydanticObjectId, request:Request) -> User:
