@@ -22,7 +22,7 @@ users_database = Database(User)
 #     "text" : "안녕하세요"
 # }
 @router.post("/")
-async def create_event(body: User) -> dict: # 형식을 body:Event로 지정
+async def create_user(body: User) -> dict: # 형식을 body:Event로 지정
     # save 사용은 동일하나, body라는 변수를 넣어 줌. 
     document = await users_database.save(body)
     return {
@@ -35,7 +35,7 @@ async def create_event(body: User) -> dict: # 형식을 body:Event로 지정
 # http://127.0.0.1:8000/users_api/{id}/{pswd}
 # http://127.0.0.1:8000/users_api/65ae11d482bbdcb75e210406/12345678
 @router.get("/{id}/{pswd}", response_model=User)
-async def retrieve_event(id: PydanticObjectId, pswd) -> User:
+async def retrieve_user(id: PydanticObjectId, pswd) -> User:
     conditions = { '_id':id,
                   'pswd':pswd}
     user = await users_database.getsbyconditions(conditions)
@@ -51,7 +51,7 @@ async def retrieve_event(id: PydanticObjectId, pswd) -> User:
 # http://127.0.0.1:8000/users_api/{id}
 # http://127.0.0.1:8000/users_api/65ae11d482bbdcb75e210406
 @router.delete("/{id}")
-async def delete_event(id: PydanticObjectId) -> dict:
+async def delete_user(id: PydanticObjectId) -> dict:
     user = await users_database.get(id)
     if not user:
         raise HTTPException(
@@ -70,7 +70,7 @@ async def delete_event(id: PydanticObjectId) -> dict:
 # http://127.0.0.1:8000/users_api/65ae1cb95286613e238fece0
 from fastapi import Request
 @router.put("/{id}", response_model=User)
-async def update_event_withjson(id: PydanticObjectId, request:Request) -> User:
+async def update_user_withjson(id: PydanticObjectId, request:Request) -> User:
     user = await users_database.get(id)
     if not user:
         raise HTTPException(
