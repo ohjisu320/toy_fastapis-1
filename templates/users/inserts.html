@@ -3,13 +3,25 @@
 <title>회원가입</title>
 
 {% block main_container %}
+
+<!-- Quill의 CSS 파일 링크 -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.snow.css" rel="stylesheet" />
+  <!-- Quill 편집기의 스타일 지정 -->
+  <style>
+    #editor {
+      height: 10rem;
+      font-size: 1.1rem;
+    }
+  </style>
+
+
 <!-- <h4>연산 exp : {{ 2 + 1 }}</h4>
 <h4>논리 exp : {{ 10 <= 5 }}</h4>
 <h4>first 변수 받기 : {{ first }} </h4>
 <h4>second 변수 받기 : {{ second }} </h4>
 <h4>변수 끼리 합산 : {{ first + second }} </h4>
 <h2>회원가입</h2> -->
-<form action="">
+<form action="" id="form_first">
     <div class="mb-3 mt-3">
         <label for="email" class="form-label">Email:</label>
         <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
@@ -34,10 +46,30 @@
     </div>
     <div>
         <label for="comment">Comments:</label>
-        <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+        <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+    </div>
+    <div>
+        <label for="comment">Comments with Quill:</label>
+        <!-- Quill 편집기를 적용할 div 요소 -->
+        <input type="hidden" name="editorContent" id="editorContent">
+        <div id="editor"></div>
     </div>
     <button type="submit" class="btn btn-primary" formaction="/users/insert" formmethod="post">가입</button>
     <button type="submit" class="btn btn-primary" formaction="/">취소</button>
 
 </form>
+
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.js"></script>
+
+<!-- Quill 편집기 초기화 스크립트 -->
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+    let form_first = document.querySelector('#form_first');
+    form_first.onsubmit = function(event) {
+      let editorContentInput = document.querySelector('#editorContent');
+      editorContentInput.value = quill.root.innerHTML;}
+</script>
+
 {% endblock %}
